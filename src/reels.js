@@ -41,7 +41,6 @@
                 .text(function(d) {
                     return d;
                 })
-                .attr('fill', 'red')
                 .attr('class', 'reel' + index)
                 .attr('x', 20 * index)
                 .attr('y', function(d, i) {

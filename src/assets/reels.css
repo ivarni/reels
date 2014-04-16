@@ -1,12 +1,9 @@
-#reel_0 {
-    stroke: blue;
-    fill: none;
+.reel1 {
+    fill: blue;
 }
-#reel_1 {
-    stroke: red;
-    fill: none;
+.reel2 {
+    fill: red;
 }
-#reel_2 {
-    stroke: green;
-    fill: none;
+.reel3 {
+    fill: green;
 }
