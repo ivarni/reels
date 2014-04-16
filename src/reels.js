@@ -46,28 +46,32 @@
                 });
     }
 
-    var createReel = function(index) {
-        var generator = data();
-        renderReel(index, generator);
-        return (function(gen) {
-            return setInterval(function() {
-                renderReel(index, gen);
-            }, 200)
-        }(generator));
+    var createReel = function(index, ttl) {
+        var promise = new Promise(function(resolve, reject) {
+            var generator = data();
+            renderReel(index, generator);
+            var intervalId = (function(gen) {
+                return setInterval(function() {
+                    renderReel(index, gen);
+                }, 200)
+            }(generator));
+            setTimeout(function() {
+                clearInterval(intervalId);
+                resolve(svg.selectAll('text.reel' + index).data()[2])
+            }, ttl);
+        });
+        return promise;
     }
 
-    var intervalId_1 = createReel(1);
-    var intervalId_2 = createReel(2);
-    var intervalId_3 = createReel(3);
+    createReel(1, 3200).then(function(data) {
+        console.log('reel 1: ' + data);
+    });
+    createReel(2, 3700).then(function(data) {
+        console.log('reel 2: ' + data);
+    });
+    createReel(3, 4300).then(function(data) {
+        console.log('reel 3: ' + data);
+    });
 
-    setTimeout(function() {
-        clearInterval(intervalId_1);
-        clearInterval(intervalId_2);
-        clearInterval(intervalId_3);
-
-        console.log('reel 1: ' + svg.selectAll('text.reel1').data()[2]);
-        console.log('reel 2: ' + svg.selectAll('text.reel2').data()[2]);
-        console.log('reel 3: ' + svg.selectAll('text.reel3').data()[2]);
-    }, 4000);
 
 }());
