@@ -56,8 +56,18 @@
         }(generator));
     }
 
-    createReel(1);
-    createReel(2);
-    createReel(3);
+    var intervalId_1 = createReel(1);
+    var intervalId_2 = createReel(2);
+    var intervalId_3 = createReel(3);
+
+    setTimeout(function() {
+        clearInterval(intervalId_1);
+        clearInterval(intervalId_2);
+        clearInterval(intervalId_3);
+
+        console.log('reel 1: ' + svg.selectAll('text.reel1').data()[2]);
+        console.log('reel 2: ' + svg.selectAll('text.reel2').data()[2]);
+        console.log('reel 3: ' + svg.selectAll('text.reel3').data()[2]);
+    }, 4000);
 
 }());
