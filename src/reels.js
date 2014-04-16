@@ -19,20 +19,19 @@
     var svg = body.append('svg');
 
     function* data() {
-        var array = [1, 2, 3, 4, 5]
+        var array = _.shuffle([1, 2, 3, 4, 5]);
         while (true) {
             array.rotate(1);
             yield array;
         }
     };
 
-    var generator = data();
 
-    var render = function() {
-        svg.selectAll('text')
+    var renderReel = function(index, generator) {
+        svg.selectAll('text.reel' + index)
             .data([])
             .exit().remove();
-        svg.selectAll('text')
+        svg.selectAll('text.reel' + index)
             .data(generator.next().value)
             .enter()
                 .append('text')
@@ -40,15 +39,25 @@
                     return d;
                 })
                 .attr('fill', 'red')
-                .attr('x', 20)
+                .attr('class', 'reel' + index)
+                .attr('x', 20 * index)
                 .attr('y', function(d, i) {
                     return 20 * (i + 1);
                 });
     }
 
+    var createReel = function(index) {
+        var generator = data();
+        renderReel(index, generator);
+        return (function(gen) {
+            return setInterval(function() {
+                renderReel(index, gen);
+            }, 200)
+        }(generator));
+    }
 
-    setInterval(function() {
-        render();
-    }, 100);
+    createReel(1);
+    createReel(2);
+    createReel(3);
 
 }());
