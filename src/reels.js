@@ -16,7 +16,10 @@
 (function() {
 
     var body = d3.select('body');
-    var svg = body.append('svg');
+    var svg = body.append('svg')
+                .attr('height', 200)
+                .attr('width', 600)
+                .attr('viewBox', '0 50 80 10');
 
     function* data() {
         var array = _.shuffle([1, 2, 3, 4, 5]);
